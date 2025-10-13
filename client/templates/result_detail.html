@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Детали результата диагностики</h1>
+
+<p><strong>Пациент:</strong> {{ object.client }}</p>
+<p><strong>Врач:</strong> {{ object.doctor }}</p>
+<p><strong>Дата диагностики:</strong> {{ object.diagnosis_date|date:"d.m.Y H:i" }}</p>
+<p><strong>Диагноз:</strong> {{ object.diagnosis }}</p>
+<p><strong>Рекомендации:</strong> {{ object.recommendations }}</p>
+<p><strong>Комментарий:</strong> {{ object.comment }}</p>
+
+<p>
+    <a href="{% url 'client:result_update' object.pk %}" class="btn btn-warning">Редактировать</a>
+    <a href="{% url 'client:result_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+    <a href="{% url 'client:result_list' %}" class="btn btn-secondary">Назад к списку</a>
+</p>
+{% endblock %}

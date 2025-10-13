@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Свободные слоты для записи</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Имя врача</th>
+            <th>Специализация</th>
+            <th>Начало</th>
+            <th>Продолжительность</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for slot in free_slots %}
+            <tr>
+                <td>{{ slot.doctor.last_name }} {{ slot.doctor.first_name }}</td>
+                <td>{{ slot.doctor.specialization }}</td>
+                <td>{{ slot.start_time|date:"d.m.Y H:i" }}</td>
+                <td>{{ slot.duration_minutes }} мин.</td>
+                <td>
+                    <a href="{% url 'client:create_record' slot.pk %}" class="btn btn-primary">Записаться</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3">Нет свободных слотов</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

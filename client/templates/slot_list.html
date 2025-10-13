@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Список слотов</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Начало</th>
+            <th>Продолжительность</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for slot in slots %}
+            <tr>
+                <td>{{ slot.start_time|date:"d.m.Y H:i" }}</td>
+                <td>{{ slot.duration_minutes }} мин.</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="2">Нет ни одного слота</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p><a href="{% url 'client:add_slot' doctor.pk %}" class="btn btn-primary">Добавить новый слот</a></p>
+<p><a href="{% url 'client:all_slots' %}">Cписок слотов</a></p>
+{% endblock %}

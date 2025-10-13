@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        {% if service.picture %}
+                            <img src="{{ service.picture.url }}" alt="{{ service.name }}">
+                        {% else %}
+                            <img src="/media/img_7.png" alt="{{ service.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <p class="card-text">Услуга: {{ service.name }}</p>
+                            <p class="card-text">Описание: {{ service.description }}</p>
+                            <p class="card-text">Цена: {{ service.price }} руб.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    {% if request.user.is_superuser or request.user.has_perm.service.can_manage_services %}
+                                        <a class="btn btn-primary" href="{% url 'service:service_update' service.pk %}" role="button">Редактировать</a>
+                                        <a class="btn btn-danger" href="{% url 'service:service_delete' service.pk %}" role="button">Удалить</a>
+                                    {% endif %}
+                                    <a class="btn btn-primary" href="{% url 'doctors:home' %}" role="button">Назад</a>
+                                </div>
+                                <small class="text-body-secondary"></small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

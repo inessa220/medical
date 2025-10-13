@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} Врачи клиники {% endblock %}
+
+{% block body_id %}services{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="mt-5">Наши услуги</h1>
+</div>
+<div class="container">
+    <div class="row">
+        {% for service in services %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if service.picture %}
+                        <img src="{{ service.picture.url }}" alt="{{ service.name }}">
+                    {% else %}
+                        <img src="/media/img_7.png" alt="{{ service.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service.name }}</h5>
+                        <p class="card-text">Описание: {{ service.description|truncatechars:50 }}</p>
+                        <p class="card-text">Цена: {{ service.price }} руб.</p>
+                        <a href="{% url 'service:service_detail' service.pk %}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% if request.user.is_superuser or request.user.has_perm.service.can_manage_services %}
+    <a href="{% url 'service:service_create' %}" class="btn btn-primary">Добавить услугу</a>
+{% endif %}
+{% endblock %}

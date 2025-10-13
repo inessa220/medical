@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %} Главная страница {% endblock %}
+
+{% block body_id %}home{% endblock %}
+
+{% block content %}
+<h1>Добро пожаловать в диагностический центр!</h1>
+<h2>Мы заботимся о вашем здоровье</h2>
+
+<img src="/media/img.png" alt="фото" class="img-fluid my-3">
+    <div class="col-sm-8 col-md-7 py-4">
+        <div class="row">
+            <p class="text-black">Наша компания — это пространство заботы и здоровья, где каждый пациент получает индивидуальный подход и внимательное отношение профессионалов высокого уровня.
+                Используя новейшие технологии и оборудование последнего поколения, мы стремимся обеспечить точную диагностику заболеваний и состояний организма, помогая нашим пациентам своевременно выявить нарушения и принять меры для сохранения здоровья.
+                Наш коллектив объединяет опытных врачей-диагностов, исследователей и консультантов, которые ежедневно трудятся над улучшением качества предоставляемых услуг.
+                Современная материально-техническая база позволяет проводить полный спектр исследований, включая лабораторные анализы, инструментальную диагностику и специализированные консультации.
+                Мы ценим доверие наших пациентов и работаем для того, чтобы каждое посещение клиники было комфортным и эффективным.
+                Нас выбирают те, кому важны надежность результатов, профессионализм команды и душевное тепло, с которым мы встречаем каждого пациента.
+                Будьте здоровы вместе с нами!</p>
+        </div>
+    </div>
+
+    <div class="col-sm-8 col-md-7 py-4">
+        <div class="row">
+            <h3> Перечень предоставляемых услуг: </h3>
+                <table>
+        <tbody>
+            {% for service in services %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{% url 'service:service_detail' service.id %}">{{ service.name }}</a></td>
+                    <td>{{ service.price }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">Нет доступных услуг.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="col-sm-8 col-md-7 py-4">
+        <div class="row">
+            <h3> Контактная информация: </h3>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Адрес:</strong> г. Омск, ул. Ленина, д.5</p>
+                <p><strong>Телефон:</strong> +7 (3812) 00 00 00 </p>
+                <p><strong>Email:</strong> info@example.ru</p>
+                <p><strong>Часы работы:</strong> Пн-Вс: 9:00 - 20:00</p>
+            </div>
+        </div>
+    </div>
+
+<div class="container mt-5">
+    <h4>Оставьте свое сообщение:</h4>
+    <form action="{% url 'doctors:process-form' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Сообщение:</label>
+            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-custom">Отправить</button>
+    </form>
+</div>
+
+{% endblock %}

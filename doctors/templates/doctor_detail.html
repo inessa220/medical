@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        {% if doctor.avatar %}
+                            <img src="{{ doctor.avatar.url }}" alt="{{ doctor.first_name }} {{ doctor.last_name }}">
+                        {% else %}
+                            <img src="/media/img_6.png" alt="{{ doctor.first_name }} {{ doctor.last_name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <p class="card-text">Ф.И.О.: {{ doctor.last_name }} {{ doctor.first_name }} {{ doctor.patronymic }}</p>
+                            <p class="card-text">Специализация: {{ doctor.specialization }}</p>
+                            <p class="card-text">Образование: {{ doctor.education }}</p>
+                            <p class="card-text">Опыт работы: {{ doctor.experience }}}</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    {% if request.user.is_superuser or request.user.has_perm.doctors.can_manage_doctors %}
+                                        <a class="btn btn-primary" href="{% url 'doctors:doctor_update' doctor.pk %}" role="button">Редактировать</a>
+                                        <a class="btn btn-danger" href="{% url 'doctors:doctor_delete' doctor.pk %}" role="button">Удалить</a>
+                                        <a href="{% url 'client:add_slot' doctor.pk %}" class="btn btn-dark">Добавить слот</a>
+                                    {% endif %}
+                                    <a class="btn btn-primary" href="{% url 'doctors:doctor_list' %}" role="button">Назад</a>
+                                </div>
+                                <small class="text-body-secondary"></small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Врачи клиники {% endblock %}
+
+{% block body_id %}doctors{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="mt-5">Наши врачи</h1>
+</div>
+<div class="container">
+    <div class="row">
+        {% for doctor in doctors %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if doctor.avatar %}
+                        <img src="{{ doctor.avatar.url }}" alt="{{ doctor.first_name }} {{ doctor.last_name }}">
+                    {% else %}
+                        <img src="/media/img_6.png" alt="{{ doctor.first_name }} {{ doctor.last_name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ doctor.last_name }} {{ doctor.first_name }} {{ doctor.patronymic }}</h5>
+                        <p class="card-text">Специализация: {{ doctor.specialization }}</p>
+                        <p class="card-text">Образование: {{ doctor.education }}</p>
+                        <p class="card-text">Опыт работы: {{ doctor.experience|truncatechars:50 }}</p>
+                        <a href="{% url 'doctors:doctor_detail' doctor.pk %}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% if request.user.is_superuser or request.user.has_perm.doctors.can_manage_doctors %}
+    <p><a href="{% url 'doctors:doctor_create' %}" class="btn btn-primary">Добавить врача</a></p>
+    <p><a href="{% url 'client:all_slots' %}" class="btn btn-primary">Показать все слоты</a></p>
+    <p><a href="{% url 'client:create-result' %}" class="btn btn-primary">Добавить результат диагностики</a></p>
+{% endif %}
+{% endblock %}

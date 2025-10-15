@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %} Главная страница {% endblock %}
+
+{% block body_id %}contact{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="mt-5">Контакты</h1>
+</div>
+
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td class="w-25">Адрес компании:</td>
+                            <td>г. Омск, ул. Ленина, д.5</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Контактный телефон:</td>
+                            <td>+7 (3812) 00 00 00</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Email:</td>
+                            <td>info@example.ru</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Часы работы:</td>
+                            <td>Пн-Вс: 9:00 - 20:00</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row text-start">
+                    <div class="col-lg-12 col-md-6 col-sm-12">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <tr>
+                                    <td class="w-25">Схема проезда</td>
+                                    <img class="card-img-top" src="/media/img_5.png" alt="Схема проезда">
+                                </tr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h4>Оставьте свое сообщение:</h4>
+    <form action="{% url 'doctors:process-form' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Сообщение:</label>
+            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-custom">Отправить</button>
+    </form>
+</div>
+{% endblock %}

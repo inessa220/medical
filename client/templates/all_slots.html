@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Все запланированные слоты</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Имя врача</th>
+            <th>Специализация</th>
+            <th>Начало</th>
+            <th>Продолжительность</th>
+            <th>Редактирование</th>
+            <th>Удаление</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for slot in slots %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ slot.doctor.last_name }} {{ slot.doctor.first_name }}</td>
+                <td>{{ slot.doctor.specialization }}</td>
+                <td>{{ slot.start_time|date:"d.m.Y H:i" }}</td>
+                <td>{{ slot.duration_minutes }} мин.</td>
+                <td>
+                    <a href="{% url 'client:update_slot' slot.pk %}" class="btn btn-warning btn-sm">Редактировать</a>
+                </td>
+                <td>
+                    <a href="{% url 'client:delete_slot' slot.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">Нет запланированных слотов</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p><a href="{% url 'doctors:doctor_list' %}" class="btn btn-secondary">Назад к списку врачей</a></p>
+{% endblock %}

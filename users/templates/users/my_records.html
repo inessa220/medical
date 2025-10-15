@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои записи</title>
+</head>
+<body>
+    <h1>Мои записи на прием</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Дата приема</th>
+                <th>Время начала</th>
+                <th>Врач</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.slot.start_time|date:"Y-m-d" }}</td>
+                    <td>{{ record.slot.start_time|time:"H:i" }}</td>
+                    <td>{{ record.slot.doctor }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">У вас нет записей на прием</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><a href="{% url 'users:account' %}">Назад в личный кабинет</a></p>
+</body>
+</html>

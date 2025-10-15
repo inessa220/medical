@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Результаты моих диагностик</h1>
+
+{% if results %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Врач</th>
+                <th>Дата диагностики</th>
+                <th>Диагноз</th>
+                <th>Рекомендации</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.doctor }}</td>
+                    <td>{{ result.diagnosis_date|date:"d.m.Y H:i" }}</td>
+                    <td>{{ result.diagnosis }}</td>
+                    <td>{{ result.recommendations }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>У вас нет результатов диагностики.</p>
+{% endif %}
+
+<p><a href="{% url 'users:account' %}" class="btn btn-secondary">Вернуться в личный кабинет</a></p>
+{% endblock %}
